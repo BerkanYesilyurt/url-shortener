@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('user_id')->nullable();
             $table->string('email')->nullable();
+            $table->string('short_path')->unique();
             $table->string('url');
-            $table->boolean('private')->default('false');
+            $table->boolean('private')->default(false);
             $table->timestamps();
         });
     }
