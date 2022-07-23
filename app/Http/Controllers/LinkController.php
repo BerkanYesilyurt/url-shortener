@@ -3,22 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 
 class LinkController extends Controller
 {
-    public function redirect($short_path, Link $link){
+    public function getRealIp(){
+        foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+            if (array_key_exists($key, $_SERVER) === true){
+                foreach (explode(',', $_SERVER[$key]) as $ip){
+                    $ip = trim($ip);
+                    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                        return $ip;
+                    }
+                }
+            }
+        }
+        return request()->getClientIp();
+    }
 
-
-        $url = $link->where('short_path', '=' , $short_path)->value('url');
-        if($url == null){
-         return redirect('/');
+    public function redirect($short_path, Link $link, Visitor $visitor, Request $request)
+    {
+        $url = $link->where('short_path', '=' , $short_path);
+        if($url->value('url') == null){
+            return redirect('/');
         }else{
-       return redirect()->away($url);
+            $agent = new Agent;
+            $visitor->create([
+                'link_id' => $url->value('id'),
+                'ip_address' => self::getRealIp(),
+                'browser' => $agent->browser(),
+                'device' => $agent->device(),
+                'other' => $request->userAgent()
+            ]);
+
+            return redirect()->away($url->value('url'));
         }
     }
 
-    public function generatePath() {
+    public function generatePath()
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
 
