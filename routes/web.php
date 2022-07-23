@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +15,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Homepage
 Route::get('/', function () {
-    return view('index');
+    return view('shortener');
 });
 
+//Shorten the URL
 Route::post('shorten', [LinkController::class, 'store']);
 
+//Login&Register Form Pages(view)
+Route::get('login', [UserController::class, 'showLogin']);
+Route::get('register', [UserController::class, 'showRegister']);
+
+//Login&Register
+Route::post('login', [UserController::class, 'login']);
+Route::post('register', [UserController::class, 'register']);
+
+//Logout
+Route::get('logout', [UserController::class, 'logout']);
+
+//Redirect to Real URL
 Route::get('/{short_path}', [LinkController::class, 'redirect']);
