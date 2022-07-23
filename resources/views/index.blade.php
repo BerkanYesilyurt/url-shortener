@@ -35,12 +35,11 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="masthead mb-auto">
         <div class="inner">
-            <h3 class="masthead-brand">LOGO</h3>
+            <a href="#"><h3 class="masthead-brand">LOGO</h3></a>
             <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="#">Home</a>
-                <!--<a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>
-                -->
+                <a class="nav-link active" href="#">Login</a>
+                <a class="nav-link active" href="#">Register</a>
+
             </nav>
         </div>
     </header>
@@ -53,12 +52,16 @@
         <form action="/shorten" method="POST">
          @csrf
         <p class="lead">
-            <input type="text" name="url" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Shorten Your Link" value="{{old('url')}}">
+            <input type="text" name="url" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Shorten Your Link" autocomplete="off" value="{{old('url')}}" />
             <br>
-            <select name="private" class="form-control form-control-lg" style="font-size: 1.45rem;">
+            <select name="private" id="private" class="form-control form-control-lg" onchange="bring()" style="font-size: 1.45rem;">
                 <option {{(old('private') == '0') ? "selected" : ""}} value="0">Public</option>
                 <option {{(old('private') == '1') ? "selected" : ""}} value="1">Private</option>
             </select>
+
+            <div id="emailarea" style="display: {{(old('private') == '1') ? "inline" : "none"}};">
+            <input type="text" name="email" id="email" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Emails (comma separated)" autocomplete="off" value="{{old('email')}}" />
+            </div>
             <br>
             <button type="submit" class="btn btn-primary btn-lg btn-block">SHORTEN</button>
         </p>
@@ -66,7 +69,7 @@
             @if(session('short_path'))
             <div class="alert alert-success">
                 <strong>SUCCESS!</strong> <p>You can copy the shortened link below.</p>
-                <input class="form-control" style="text-align:center; font-size: 130%" type="text" onClick="this.select();" value="{{url('/') . "/" . session('short_path')}}" readonly>
+                <input class="form-control" style="text-align:center; font-size: 130%" type="text" onClick="this.select();" value="{{url('/') . "/" . session('short_path')}}" readonly />
                 <br>
                 <p>
                 <a href="{{url('/') . "/stats/" . session('short_path')}}" class="badge badge-dark" style="font-size: 120%">Stats</a>
@@ -93,6 +96,17 @@
     </footer>
 </div>
 
+<script type="application/javascript">
+    function bring(){
 
+var select = document.getElementById('private');
+var value = select.options[select.selectedIndex].value
+    if(value == 1){
+document.getElementById("emailarea").style.display = "inline";
+    }else{
+document.getElementById("emailarea").style.display = "none";
+    }
+    }
+</script>
 </body>
 </html>
