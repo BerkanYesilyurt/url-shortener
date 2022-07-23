@@ -60,6 +60,7 @@ class LinkController extends Controller
         $fields = $request->validate([
             'url' => 'required|url',
             'private' => 'required|boolean',
+            'email' => 'nullable|email|min:5'
         ]);
 
 
@@ -72,6 +73,9 @@ class LinkController extends Controller
 
         $fields['short_path'] = $myPath;
 
+        if(auth()->user()){
+        $fields['user_id'] = auth()->user()->id;
+        }
 
         $link->create($fields);
 
