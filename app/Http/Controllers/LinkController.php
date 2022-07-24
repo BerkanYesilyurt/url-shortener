@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Link;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Jenssegers\Agent\Agent;
 
 class LinkController extends Controller
@@ -29,6 +30,20 @@ class LinkController extends Controller
         if($url->value('url') == null){
             return redirect('/');
         }else{
+
+            if($url->value('private') == 1){
+                if(auth()->user() && (auth()->user()->email == $url->value('email'))){
+                    //authorized
+                }else{
+                    if(auth()->user()){
+                        return redirect('/')->with('message', 'You are not authorized to access this link.');
+                    }else{
+                        return redirect('/login')->with('message', 'This is a private link. You must be logged in to be able to access the real link.');
+                    }
+
+                }
+            }
+
             $agent = new Agent;
             $visitor->create([
                 'link_id' => $url->value('id'),
@@ -39,6 +54,7 @@ class LinkController extends Controller
             ]);
 
             return redirect()->away($url->value('url'));
+
         }
     }
 
@@ -57,11 +73,16 @@ class LinkController extends Controller
 
     public function store(Request $request)
     {
-        $fields = $request->validate([
+
+        $fields = $request->validate(
+            [
             'url' => 'required|url',
             'private' => 'required|boolean',
-            'email' => 'nullable|email|min:5'
-        ]);
+            'email' => 'nullable|email|min:5|required_if:private,==,1'
+            ],
+            [
+                'email.required_if' => 'The email field is required when private is selected.',
+            ]);
 
 
         $link = new Link;
@@ -81,6 +102,11 @@ class LinkController extends Controller
 
         return back()->with('short_path', $fields['short_path']);
 
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 
 
