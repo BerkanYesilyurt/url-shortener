@@ -31,6 +31,9 @@ Route::get('register', [UserController::class, 'showRegister']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 
+//Dashboard
+Route::get('dashboard', [LinkController::class, 'dashboard']);
+
 //Logout
 Route::get('logout', [UserController::class, 'logout']);
 
