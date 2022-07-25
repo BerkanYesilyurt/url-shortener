@@ -43,6 +43,11 @@ class LinkController extends Controller
 
                 }
             }
+            if(is_null($request->header('referer'))){
+                $referer = "Direct";
+            }else{
+                $referer = $request->header('referer');
+            }
 
             $agent = new Agent;
             $visitor->create([
@@ -50,6 +55,7 @@ class LinkController extends Controller
                 'ip_address' => self::getRealIp(),
                 'browser' => $agent->browser(),
                 'device' => $agent->device(),
+                'referer' => $referer,
                 'other' => $request->userAgent()
             ]);
 
@@ -104,10 +110,6 @@ class LinkController extends Controller
 
     }
 
-    public function dashboard()
-    {
-        return view('dashboard');
-    }
 
 
 }
