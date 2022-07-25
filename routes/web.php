@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +32,11 @@ Route::get('register', [UserController::class, 'showRegister']);
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
 
+//Simple Stats Page
+Route::get('stats/{short_path}', [StatsController::class, 'stats']);
+
 //Dashboard
-Route::get('dashboard', [LinkController::class, 'dashboard']);
+Route::get('dashboard', [StatsController::class, 'dashboard']);
 
 //Logout
 Route::get('logout', [UserController::class, 'logout']);
