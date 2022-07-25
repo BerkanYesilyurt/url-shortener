@@ -28,7 +28,7 @@
             <input class="form-control" style="text-align:center; font-size: 130%" type="text" onClick="this.select();" value="{{url('/') . "/" . session('short_path')}}" readonly />
             <br>
             <p>
-                <a href="{{url('/') . "/stats/" . session('short_path')}}" class="badge badge-dark" style="font-size: 120%">Stats</a>
+                <a target="_blank" href="{{url('/') . "/stats/" . session('short_path')}}" class="badge badge-dark" style="font-size: 120%">Stats</a>
             </p>
         </div>
     @endif
