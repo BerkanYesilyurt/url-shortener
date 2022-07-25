@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('ip_address')->nullable();
             $table->string('browser')->nullable();
             $table->string('device')->nullable();
+            $table->string('referer');
             $table->text('other')->nullable();
             $table->timestamps();
         });
