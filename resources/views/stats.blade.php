@@ -1,12 +1,15 @@
 @extends('index')
 
 @section('content')
+
     <h1 class="cover-heading">Stats</h1>
     <br>
-    <p class="lead">{{url()->current();}}</p>
+    <p class="lead">{{str_replace('stats/', '', url()->current())}}</p>
     <br>
         <p class="lead">
-
+    <div class="alert alert-warning" role="alert" style="text-shadow: none;">
+        <b>Total visitors of this link: {{count($visitors)}}</b>
+    </div>
         </p>
 
 
@@ -42,7 +45,11 @@
         @endforeach
             </tbody>
          </table>
-    <div style="color: black;">{{ $visitors->links() }}</div>
+            <style>
+                .bg-white { background-color: transparent!important; }
+            </style>
+          <br>
+           {{ $visitors->links() }}
         @else
             <center>No visitors found.</center>
         @endif
