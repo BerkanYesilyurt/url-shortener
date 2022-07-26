@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 class StatsController extends Controller
 {
 
-    public function dashboard()
+    public function dashboard(Link $link)
     {
-        return view('dashboard');
+        if(auth()->user()){
+            $LinksOfUser = $link->where('user_id', '=', auth()->user()->id)->paginate(10);
+
+            return view('dashboard', compact('LinksOfUser'));
+        }else{
+           return redirect('/');
+        }
     }
 
     public function stats($short_path, Link $link, Visitor $visitor){
