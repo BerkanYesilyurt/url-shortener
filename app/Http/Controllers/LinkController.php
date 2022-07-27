@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Link;
+use App\Models\User;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -110,6 +111,24 @@ class LinkController extends Controller
 
     }
 
+
+    public function destroy($id, User $user, Link $link, Visitor $visitor)
+    {
+        $linkRecord = $link->where('id', '=', $id);
+        if(auth()->user() && (auth()->user()->id == $linkRecord->value('user_id'))){
+
+        $linkRecord->delete();
+        $visitors = $visitor->where('link_id', '=', $id);
+        $visitors->delete();
+
+        return back()->with('message', 'URL and visitors deleted successfully.');
+
+        }else{
+
+        return back()->with('message', 'You are not authorized to delete this URL.');
+
+        }
+    }
 
 
 }
