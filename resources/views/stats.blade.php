@@ -51,7 +51,7 @@
           <br>
            {{ $visitors->links() }}
         @else
-            <center>No visitors found.</center>
+            <font size="5"><center>No visitors found.</center></font>
         @endif
 
 
