@@ -20,7 +20,11 @@
                 <td>{{str_replace('minutes', 'min', $LinkOfUser->created_at->diffForHumans())}}</td>
                 <td><a target="_blank" href="{{url('/') . '/' . $LinkOfUser->short_path}}" class="btn btn-info">Go To Link</a></td>
                 <td><a target="_blank" href="{{url('/') . '/stats/' . $LinkOfUser->short_path}}" class="btn btn-info">Stats</a></td>
-                <td><a class="btn btn-danger" style="color: white;">Delete</a></td>
+            <form method="POST" action="/delete/{{$LinkOfUser->id}}">
+                @csrf
+                @method('DELETE')
+            <td><button type="submit" class="btn btn-danger" style="color: white;">Delete</button></td>
+            </form>
         </tr>
     @endforeach
         </tbody>
@@ -31,6 +35,6 @@
     <br>
     {{ $LinksOfUser->links() }}
     @else
-        <center>No visitors found.</center>
+        <font size="5"><center>No links found.</center></font>
     @endif
 @endsection
