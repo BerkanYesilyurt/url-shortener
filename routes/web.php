@@ -38,6 +38,9 @@ Route::get('stats/{short_path}', [StatsController::class, 'stats']);
 //Dashboard
 Route::get('dashboard', [StatsController::class, 'dashboard']);
 
+//Delete URL
+Route::delete('delete/{id}', [LinkController::class, 'destroy']);
+
 //Logout
 Route::get('logout', [UserController::class, 'logout']);
 
