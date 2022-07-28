@@ -19,30 +19,30 @@ use Illuminate\Support\Facades\Route;
 //Homepage
 Route::get('/', function () {
     return view('shortener');
-});
+})->name('homepage');
 
 //Shorten the URL
 Route::post('shorten', [LinkController::class, 'store']);
 
 //Login&Register Form Pages(view)
-Route::get('login', [UserController::class, 'showLogin']);
-Route::get('register', [UserController::class, 'showRegister']);
+Route::get('login', [UserController::class, 'showLogin'])->middleware('guest')->name('login');
+Route::get('register', [UserController::class, 'showRegister'])->middleware('guest');
 
 //Login&Register
-Route::post('login', [UserController::class, 'login']);
-Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login'])->middleware('guest');
+Route::post('register', [UserController::class, 'register'])->middleware('guest');
 
 //Simple Stats Page
 Route::get('stats/{short_path}', [StatsController::class, 'stats']);
 
 //Dashboard
-Route::get('dashboard', [StatsController::class, 'dashboard']);
+Route::get('dashboard', [StatsController::class, 'dashboard'])->middleware('auth');
 
 //Delete URL
-Route::delete('delete/{id}', [LinkController::class, 'destroy']);
+Route::delete('delete/{id}', [LinkController::class, 'destroy'])->middleware('auth');
 
 //Logout
-Route::get('logout', [UserController::class, 'logout']);
+Route::get('logout', [UserController::class, 'logout'])->middleware('auth');
 
 //Redirect to Real URL
 Route::get('/{short_path}', [LinkController::class, 'redirect']);
