@@ -7,7 +7,7 @@
     <title>URL Shortener</title>
     <meta name="description" content="URL Shortener">
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="theme-color" content="#563d7c">
 
@@ -38,7 +38,7 @@
             <a href="/"><h3 class="masthead-brand">LOGO</h3></a>
             <nav class="nav nav-masthead justify-content-center">
                 @auth()
-                <a class="nav-link">Welcome {{auth()->user()->name}}</a>
+                <a href="/profile" class="nav-link">Welcome, <i class="fa fa-user"></i> {{auth()->user()->name}}</a>
                 <a class="nav-link active" href="/dashboard">Dashboard</a>
                 <a class="nav-link active" href="/logout">Logout</a>
                 @else
