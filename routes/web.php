@@ -38,6 +38,12 @@ Route::get('stats/{short_path}', [StatsController::class, 'stats']);
 //Dashboard
 Route::get('dashboard', [StatsController::class, 'dashboard'])->middleware('auth');
 
+//Show User Profile
+Route::get('profile', [UserController::class, 'showProfile'])->middleware('auth');
+
+//Update User Profile
+Route::post('profile', [UserController::class, 'updateProfile'])->middleware('auth');
+
 //Delete URL
 Route::delete('delete/{id}', [LinkController::class, 'destroy'])->middleware('auth');
 
