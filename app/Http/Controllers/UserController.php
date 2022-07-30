@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -14,6 +15,10 @@ class UserController extends Controller
 
     public function showRegister(){
         return view('register');
+    }
+
+    public function showProfile(){
+        return view('profile');
     }
 
     public function login(Request $request, User $user){
@@ -49,5 +54,29 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/')->with('message', 'You have successfully logged out.');
+    }
+
+
+    public function updateProfile(Request $request, User $user){
+        $fields = $request->validate([
+            'name' => ['required', 'min:3'],
+            'password' => ['nullable', 'confirmed', 'min:6']
+        ]);
+
+        if(!Hash::check($request->oldpassword, auth()->user()->password)) {
+            return back()->with("message", "Old password does not match.");
+        }
+
+        $user->where('id', '=', auth()->user()->id)->update([
+            'name' => $fields['name']
+        ]);
+
+        if($fields['password'] !== null && $fields['password'] !== ''){
+            $user->where('id', '=', auth()->user()->id)->update([
+                'password' => bcrypt($fields['password'])
+            ]);
+        }
+
+        return back()->with('message', 'You have successfully changed your credentials.');
     }
 }
