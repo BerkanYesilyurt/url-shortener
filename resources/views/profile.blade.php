@@ -1,17 +1,16 @@
 @extends('index')
 
 @section('content')
-    <h1 class="cover-heading">Profile</h1>
-    <br>
-    <p class="lead">Update your profile.</p>
-    <br>
+
     <form action="/profile" method="POST">
         @csrf
+
         <p class="lead">
 
-            <input type="text" name="name" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Your New Name" value="{{auth()->user()->name}}" autocomplete="off" />
+            <br><br>
+        <h1 class="cover-heading">PROFILE SETTINGS</h1>
             <br>
-            <hr style="border: 1px solid white;">
+            <input type="text" name="name" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Your New Name" value="{{auth()->user()->name}}" autocomplete="off" />
             <br>
             <input type="password" name="oldpassword" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Old Password" autocomplete="off" required />
             <br>
@@ -19,17 +18,31 @@
             <br>
             <input type="password" name="password_confirmation" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="Confirm Password" autocomplete="off" />
             <br>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">UPDATE</button>
-        </p>
+            <button type="submit" class="btn btn-success btn-lg btn-block">UPDATE</button>
+        @error('name')
+        <br>
+        <div class="alert alert-danger">
+            {{$message}}
+        </div>
+        @enderror
+        @error('password')
+        <br>
+        <div class="alert alert-danger">
+            {{$message}}
+        </div>
+        @enderror
+
     </form>
-    @error('name')
-    <div class="alert alert-danger">
-        {{$message}}
-    </div>
-    @enderror
-    @error('password')
-    <div class="alert alert-danger">
-        {{$message}}
-    </div>
-    @enderror
+    <br><br>
+    <h1 class="cover-heading">API</h1>
+    <br>
+    @if(is_null(auth()->user()->API_token))
+        <a href="/generateToken" class="btn btn-primary btn-lg btn-block">Generate API Token</a>
+    @else
+        <input class="form-control" style="text-align:center; font-size: 130%" type="text" onclick="this.select();" value="{{auth()->user()->API_token}}" readonly />
+        <br>
+        <a href="/generateToken" class="btn btn-primary btn-lg btn-block">Regenerate API Token</a>
+    @endif
+    </p>
+
 @endsection
