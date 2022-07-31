@@ -44,6 +44,9 @@ Route::get('profile', [UserController::class, 'showProfile'])->middleware('auth'
 //Update User Profile
 Route::post('profile', [UserController::class, 'updateProfile'])->middleware('auth');
 
+//Generate & Regenerate API Token
+Route::get('generateToken', [UserController::class, 'generateToken'])->middleware('auth');
+
 //Delete URL
 Route::delete('delete/{id}', [LinkController::class, 'destroy'])->middleware('auth');
 
