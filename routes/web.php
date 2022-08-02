@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LinkController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,11 @@ Route::get('stats/{short_path}', [StatsController::class, 'stats']);
 
 //Dashboard
 Route::get('dashboard', [StatsController::class, 'dashboard'])->middleware('auth');
+
+//Admin Panel
+Route::get('admin', [AdminController::class, 'index'])->middleware('auth');
+Route::get('admin/user/{user_id}', [AdminController::class, 'user'])->middleware('auth');
+Route::get('admin/user/{user_id}/edit', [AdminController::class, 'editUser'])->middleware('auth');
 
 //Show User Profile
 Route::get('profile', [UserController::class, 'showProfile'])->middleware('auth');
