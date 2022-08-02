@@ -39,6 +39,9 @@
             <nav class="nav nav-masthead justify-content-center">
                 @auth()
                 <a href="/profile" class="nav-link">Welcome, <i class="fa fa-user"></i> {{auth()->user()->name}}</a>
+                @if(auth()->user()->admin_authority == 1)
+                <a class="nav-link active" href="/admin">Admin Panel</a>
+                @endif
                 <a class="nav-link active" href="/dashboard">Dashboard</a>
                 <a class="nav-link active" href="/logout">Logout</a>
                 @else
