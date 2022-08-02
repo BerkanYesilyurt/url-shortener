@@ -115,7 +115,7 @@ class LinkController extends Controller
     public function destroy($id, User $user, Link $link, Visitor $visitor)
     {
         $linkRecord = $link->where('id', '=', $id);
-        if(auth()->user() && (auth()->user()->id == $linkRecord->value('user_id'))){
+        if(auth()->user() && ((auth()->user()->id == $linkRecord->value('user_id')) || auth()->user()->admin_authority == 1)){
 
         $linkRecord->delete();
         $visitors = $visitor->where('link_id', '=', $id);
