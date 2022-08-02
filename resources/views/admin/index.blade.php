@@ -38,8 +38,8 @@
                                 echo 'No';
                             }
                         @endphp</td>
-                    <td><a target="_blank" href="{{url('/') . '/admin/user/' . $user->id}}" class="btn btn-info">Links</a></td>
-                    <td><a target="_blank" href="{{url('/') . '/admin/user/' . $user->id . '/edit'}}" class="btn btn-danger">Edit</a></td>
+                    <td><a href="{{url('/') . '/admin/user/' . $user->id}}" class="btn btn-info">Links</a></td>
+                    <td><a href="{{url('/') . '/admin/user/' . $user->id . '/edit'}}" class="btn btn-danger">Edit</a></td>
                 </tr>
             @endforeach
             </tbody>
