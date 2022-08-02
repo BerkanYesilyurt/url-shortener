@@ -12,7 +12,7 @@ class StatsController extends Controller
     public function dashboard(Link $link)
     {
         if(auth()->user()){
-            $LinksOfUser = $link->where('user_id', '=', auth()->user()->id)->paginate(10);
+            $LinksOfUser = $link->where('user_id', '=', auth()->user()->id)->simplePaginate(10);
 
             return view('dashboard', compact('LinksOfUser'));
         }else{
