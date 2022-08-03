@@ -10,9 +10,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta name="theme-color" content="#563d7c">
-
-
     <style>
+        label {
+            color: white;
+            font-weight: bold;
+            padding: 4px;
+            text-transform: uppercase;
+            font-family: Verdana, Arial, Helvetica, sans-serif;
+            font-size: small;
+            text-align: left;
+            float:left;
+        }
+
         .bd-placeholder-img {
             font-size: 1.125rem;
             text-anchor: middle;
