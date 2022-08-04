@@ -24,8 +24,20 @@
                 <option {{($userInfo->admin_authority == '1') ? "selected" : ""}} value="1">Yes</option>
             </select>
             <br>
-            <label for="API_token">API Token</label>
-            <input type="text" name="API_token" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="API Token" autocomplete="off" value="{{$userInfo->API_token}}" />
+            <label for="API_token">API Token - <a onclick="generateAPI()" style="color: #3794ff; cursor:hand;cursor:pointer;"><b>GENERATE</b></a></label>
+            <input type="text" id="API_token" name="API_token" class="form-control form-control-lg" style="font-size: 1.45rem;" placeholder="API Token" autocomplete="off" value="{{$userInfo->API_token}}" />
+            <script>
+                function generateAPI() {
+                    var chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                    var Length = 35;
+                    var password = "";
+                    for (var i = 1; i <= Length; i++) {
+                        var randomNumber = Math.floor(Math.random() * chars.length);
+                        password += chars.substring(randomNumber, randomNumber +1);
+                    }
+                    document.getElementById("API_token").value = password;
+                }
+            </script>
             <br>
             <button type="submit" class="btn btn-primary btn-lg btn-block">EDIT</button>
         </p>
