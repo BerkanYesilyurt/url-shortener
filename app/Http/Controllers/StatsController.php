@@ -20,6 +20,32 @@ class StatsController extends Controller
         }
     }
 
+    public function isAdmin(){
+        if(auth()->user()){
+            if(auth()->user()->admin_authority == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    public function checkInEmails($emails)
+    {
+        $count = 0;
+        $separatedEmails = explode(',', $emails);
+        foreach ($separatedEmails as $separatedEmail)
+        {
+            if(trim($separatedEmail) == auth()->user()->email){
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
     public function stats($short_path, Link $link, Visitor $visitor){
         $matchedLink = $link->where('short_path', '=' , $short_path);
         $machedLinkId = $matchedLink->value('id');
@@ -27,7 +53,7 @@ class StatsController extends Controller
         if($matchedLink->exists()){
 
             if($matchedLink->value('private') == 1) {
-                if (auth()->user() && (auth()->user()->email == $matchedLink->value('email'))) {
+                if ((auth()->user() && ($this->checkInEmails($matchedLink->value('email')) >= 1)) || $this->isAdmin()){
                     //authorized
                     return view('stats', compact('visitors'));
                 }else{
