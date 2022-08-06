@@ -26,6 +26,18 @@ class LinkController extends Controller
         return request()->getClientIp();
     }
 
+    public function isAdmin(){
+        if(auth()->user()){
+            if(auth()->user()->admin_authority == 1){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     public function checkInEmails($emails)
     {
         $count = 0;
@@ -48,7 +60,7 @@ class LinkController extends Controller
         }else{
 
             if($url->value('private') == 1){
-                if(auth()->user() && ($this->checkInEmails($url->value('email')) >= 1)){
+                if((auth()->user() && ($this->checkInEmails($url->value('email')) >= 1)) || $this->isAdmin()){
                     //authorized
                 }else{
                     if(auth()->user()){
@@ -59,6 +71,8 @@ class LinkController extends Controller
 
                 }
             }
+
+            if(!$this->isAdmin()){
             if(is_null($request->header('referer'))){
                 $referer = "Direct";
             }else{
@@ -74,6 +88,7 @@ class LinkController extends Controller
                 'referer' => $referer,
                 'other' => $request->userAgent()
             ]);
+            }
 
             return redirect()->away($url->value('url'));
 
