@@ -8,6 +8,7 @@ use App\Models\Visitor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Jenssegers\Agent\Agent;
+use Spatie\ValidationRules\Rules\Delimited;
 
 class LinkController extends Controller
 {
@@ -25,6 +26,20 @@ class LinkController extends Controller
         return request()->getClientIp();
     }
 
+    public function checkInEmails($emails)
+    {
+        $count = 0;
+        $separatedEmails = explode(',', $emails);
+        foreach ($separatedEmails as $separatedEmail)
+        {
+            if(trim($separatedEmail) == auth()->user()->email){
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
     public function redirect($short_path, Link $link, Visitor $visitor, Request $request)
     {
         $url = $link->where('short_path', '=' , $short_path);
@@ -33,7 +48,7 @@ class LinkController extends Controller
         }else{
 
             if($url->value('private') == 1){
-                if(auth()->user() && (auth()->user()->email == $url->value('email'))){
+                if(auth()->user() && ($this->checkInEmails($url->value('email')) >= 1)){
                     //authorized
                 }else{
                     if(auth()->user()){
@@ -85,7 +100,7 @@ class LinkController extends Controller
             [
             'url' => 'required|url',
             'private' => 'required|boolean',
-            'email' => 'nullable|email|min:5|required_if:private,==,1'
+            'email' => ['nullable','min:5','required_if:private,==,1', new Delimited('email')]
             ],
             [
                 'email.required_if' => 'The email field is required when private is selected.',
