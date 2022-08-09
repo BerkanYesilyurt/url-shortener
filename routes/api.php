@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 //Shorten the URL
-Route::post('links', [LinkController::class, 'store'])->middleware('api');
+Route::post('links', [LinkController::class, 'newLink'])->middleware('api');
 
 //Details of Link
 Route::get('links/{short_path}', [LinkController::class, 'getDetails'])->middleware('api');
