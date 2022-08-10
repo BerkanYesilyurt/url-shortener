@@ -15,7 +15,7 @@ class LinkResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'user_id' => (string)$this->user_id,
+            'user_id' => $this->user_id ? (string)$this->user_id : NULL,
             'email' => $this->when($this->private, collect(explode(',', $this->email))
                 ->transform(function ($item) {
                     return trim($item);
@@ -24,7 +24,7 @@ class LinkResource extends JsonResource
             'short_path' => $this->short_path,
             'url' => $this->url,
             'private' => $this->private,
-            'created_at' => $this->created_at->format('d-m-Y H:s'),
+            'created_at' => $this->created_at->format('d-m-Y H:i:s'),
         ];
     }
 }
