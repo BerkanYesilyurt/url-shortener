@@ -82,7 +82,38 @@ public function newLink(Request $request, Link $link, User $user){
 
 }
 
-public function getDetails(){
+public function getDetails($short_path, Link $link, User $user, Request $request){
+$currentLink = $link->where('short_path', $short_path)->first();
+
+
+if($currentLink){
+    if($currentLink->user_id){
+        if($request->API_token && $user->where('API_token', $request->API_token)->value('id') == $currentLink->user_id){
+        //passed
+        }elseif(!$request->API_token){
+            return response()->json([
+                'error' => true,
+                'errors' => ["API_token" => "API_token is required for this request."],
+            ]);
+        }else{
+            return response()->json([
+                'error' => true,
+                'errors' => ["API_token" => "The API token of the user where the link was created and the API token you sent do not match."],
+            ]);
+        }
+    }
+    return response()->json([
+        'error' => false,
+        'link' => new LinkResource($currentLink),
+    ], 201);
+
+
+}else{
+    return response()->json([
+        'error' => true,
+        'errors' => ["short_path" => "Short path(URL) is not valid."],
+    ]);
+}
 
 }
 
