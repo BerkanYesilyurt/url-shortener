@@ -18,6 +18,7 @@ The modern, privacy-aware URL Shortener built in Laravel & PHP.
 - Dashboard of links and statistics page with information about people who visited the shortened link.
 - Admin panel where all members and links can be viewed and edited.
 - Validation of all form fields & API calls.
+- and more...
 
 
 ## Pages
@@ -46,5 +47,5 @@ The modern, privacy-aware URL Shortener built in Laravel & PHP.
 **Click on the pictures for the original resolution.**
 
 ## Developer
-Berkan Yeşilyurt
+Berkan Yeşilyurt    
 berkan38212@gmail.com
