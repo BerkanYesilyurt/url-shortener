@@ -42,9 +42,32 @@ The modern, privacy-aware URL Shortener built in Laravel & PHP.
 
 - That's it, you're ready to use it. Visit: `http://127.0.0.1:8000`
 
+## API
 
 ## Screenshots
 **Click on the pictures for the original resolution.**
+
+#### Homepage #1
+![1](https://user-images.githubusercontent.com/8729215/184247455-37b8c51a-fe24-4f07-8236-05a0d9af608a.png)
+
+#### Homepage #2
+![2](https://user-images.githubusercontent.com/8729215/184247461-2ba14497-8dd1-4ea6-9c99-084a0c000f55.png)
+
+#### Login Page
+![3](https://user-images.githubusercontent.com/8729215/184247471-3da6b7a9-a59e-4366-972e-4a2c3c1e6d77.png)
+
+#### Register Page
+![4](https://user-images.githubusercontent.com/8729215/184247482-2e4fe341-4390-4909-8e56-ee1ed7e8a3e3.png)
+
+#### Profile Settings
+![5](https://user-images.githubusercontent.com/8729215/184247493-b6f543ab-211b-49bf-96fc-8c33897ad054.png)
+
+#### Dashboard
+![6](https://user-images.githubusercontent.com/8729215/184247498-4ad44e57-4a71-46d1-8ae5-13cdb48f41a5.png)
+
+#### Admin Panel
+![7](https://user-images.githubusercontent.com/8729215/184247517-a04475c8-18fe-4c8e-bc22-6bc4a6696441.png)
+
 
 ## Developer
 Berkan Yeşilyurt    
