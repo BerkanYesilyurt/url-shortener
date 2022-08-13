@@ -43,6 +43,69 @@ The modern, privacy-aware URL Shortener built in Laravel & PHP.
 - That's it, you're ready to use it. Visit: `http://127.0.0.1:8000`
 
 ## API
+The API has 2 endpoints. You can create a new link through the API or request details of existing links. Membership required for some calls.(to create a new link or to fetch the details of link which belongs to user) API token can be generated from the settings page after logging in.
+
+### **Create New Link**
+You must be a member to create a new link via API.
+```http
+  POST /api/links
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `API_token` | `string` | **Required**|
+| `url` | `string` | **Required**|
+| `private` | `boolean` | **Required**|
+| `email` | `string` | **Required if private is true.**|
+
+**Response**
+
+```json
+{
+    "error": false,
+    "link": {
+        "user_id": "1",
+        "email": [
+            "berkan38212@gmail.com"
+        ],
+        "short_path": "3QTrbH0",
+        "url": "https://github.com/BerkanYesilyurt",
+        "private": "1",
+        "created_at": "13-08-2022 15:38:33"
+    }
+}
+```
+
+
+### **Get Details of Link**
+Details of all links that do not belong to any user can be viewed. If you want to see the details of the user's link, you must call with that user's API token.
+
+```http
+  GET /api/links/{short_path}
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :-------------------------------- |
+| `API_token`      | `string` | **Required if link belongs a user** |
+
+**Response**
+
+```json
+{
+    "error": false,
+    "link": {
+        "user_id": null,
+        "email": [
+            "berkan38212@gmail.com"
+        ],
+        "short_path": "H1BqIN5",
+        "url": "https://github.com/BerkanYesilyurt",
+        "private": 1,
+        "created_at": "13-08-2022 15:12:37"
+    }
+}
+```
+
 
 ## Screenshots
 **Click on the pictures for the original resolution.**
