@@ -42,11 +42,15 @@
             <button type="submit" class="btn btn-primary btn-lg btn-block">EDIT</button>
         </p>
     </form>
+    @if($userInfo->email != auth()->user()->email)
     <form method="POST" action="/admin/user/{{$userInfo->id}}/delete">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger btn-lg btn-block">DELETE USER</button>
     </form>
+    @else
+        <a onclick="alert('You cannot delete your account.')" class="btn btn-danger btn-lg btn-block">DELETE USER</a>
+    @endif
     @error('name')
     <div class="alert alert-danger">
         {{$message}}
