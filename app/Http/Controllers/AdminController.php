@@ -53,7 +53,7 @@ class AdminController extends Controller
             $currentUserToken = $user->where('id', '=' , $user_id)->value('API_token');
             $istokenExists = $user->where('API_token', '=' , $fields['API_token']);
 
-            if($istokenExists->count() == 1 && $currentUserToken == $fields['API_token']){
+            if(($istokenExists->count() == 1 && $currentUserToken == $fields['API_token']) || $currentUserToken == $fields['API_token']){
                 unset($fields['API_token']);
             }elseif($istokenExists->count() == 0){
                 //passed
