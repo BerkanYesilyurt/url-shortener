@@ -76,4 +76,14 @@ class AdminController extends Controller
             return redirect('/');
         }
     }
+
+    public function deleteUser($user_id, User $user, Link $link){
+
+        $links = $link->where('user_id', '=', $user_id);
+        $links->delete();
+
+        $user->find($user_id)->delete();
+
+        return redirect('/admin')->with('message', 'You have successfully deleted user.');
+    }
 }
