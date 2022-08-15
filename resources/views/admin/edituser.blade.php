@@ -42,6 +42,11 @@
             <button type="submit" class="btn btn-primary btn-lg btn-block">EDIT</button>
         </p>
     </form>
+    <form method="POST" action="/admin/user/{{$userInfo->id}}/delete">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-lg btn-block">DELETE USER</button>
+    </form>
     @error('name')
     <div class="alert alert-danger">
         {{$message}}
