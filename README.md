@@ -107,6 +107,13 @@ Details of all links that do not belong to any user can be viewed. If you want t
 ```
 
 
+**Invalid Request's Response (404)**
+```json
+{
+    "error": "Incorrect request!"
+}
+```
+
 ## Screenshots
 **Click on the pictures for the original resolution.**
 
